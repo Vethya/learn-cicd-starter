@@ -27,19 +27,19 @@ jobs:
       - name: Build
         run: ./scripts/buildprod.sh
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
       - name: Set up Cloud SDK
-        uses: 'google-github-actions/setup-gcloud@v3'
+        uses: "google-github-actions/setup-gcloud@v3"
 
       - name: Build and push to Google Artifact Registry
-        run: gcloud builds submit --tag asia-southeast1-docker.pkg.dev/notely-477815/notely-ar-repo/notely:latest .
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-478715/notely-ar-repo/notely:latest .
 
       - name: Run DB migration
         run: ./scripts/migrateup.sh
 
       - name: Deploy to Cloud Run
-        run: gcloud run deploy notely --image asia-southeast1-docker.pkg.dev/notely-477815/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-477815 --max-instances=4
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-478715/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-478715 --max-instances=4
